@@ -1,0 +1,54 @@
+﻿<Window x:Class="CalculatorApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CalculatorApp"
+        mc:Ignorable="d"
+        
+        xmlns:localization="clr-namespace:CalculatorApp.Localization"
+        xmlns:converter = "clr-namespace:CalculatorApp.Converter"
+        
+        Title="Calculator" Height="400" Width="400">
+
+    <Window.Resources>
+        <localization:StringLocalization x:Key="StringLocalization" />
+        <converter:IntegerConverter x:Key="IntegerConverter" />
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Label Content="{Binding Path=Resources.Calculator_FirstOperand, Source={StaticResource StringLocalization}}" HorizontalAlignment="Left" Margin="46 -6 0 0" VerticalAlignment="Top" Grid.Row="0"/>
+        <TextBox Name="firstOperand" Text="{Binding Path=FirstNumber, Converter={StaticResource IntegerConverter}}"  Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" 
+                 Height="23" TextWrapping="Wrap" VerticalAlignment="Center" Width="300"/>
+        
+        <ComboBox Name="operations" ItemsSource="{Binding Path=Operations}" SelectedItem="{Binding Path=SelectedOperation}" 
+                  Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="120"/>
+
+        <Label Content="{Binding Path=Resources.Calculator_SecondOperand, Source={StaticResource StringLocalization}}" HorizontalAlignment="Left" Margin="46 -6 0 0" VerticalAlignment="Top" Grid.Row="2"/>
+        <TextBox Name="secondOperand" Text="{Binding Path=SecondNumber, Converter={StaticResource IntegerConverter}}" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" Height="23" 
+                 TextWrapping="Wrap" VerticalAlignment="Center" Width="300"/>
+
+        <Label Content="=" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+        <Label Content="{Binding Path=Resources.Calculator_Result, Source={StaticResource StringLocalization}}" HorizontalAlignment="Left" Margin="46 -6 0 0" VerticalAlignment="Top" Grid.Row="4"/>
+        <TextBox Name="result" Text="{Binding Path=ResultNumber}" IsReadOnly="True" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" 
+                 Height="23" TextWrapping="Wrap" VerticalAlignment="Center" Width="300"/>
+
+        <Button Content="Calculate" Command="{Binding Path=CalculateCommand, Mode=OneWay}" Name="calculateButton" 
+                HorizontalAlignment="left" Grid.Row="5" VerticalAlignment="Center" Width="100"/>
+
+        <Button Name="resetButton" Command="{Binding Path=ResetCommand}" Content="Reset"  Grid.Column="1" HorizontalAlignment="Right"
+                Grid.Row="5" VerticalAlignment="Center" Width="100"/>
+    </Grid>
+</Window>
